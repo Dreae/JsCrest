@@ -15,9 +15,10 @@ function parse_cache_control(header){
     return (new Date().getTime() + (parseInt(match[1]) * 1000));
 }
 
-function APIConnection() {
+function APIConnection(headers) {
     var self = this;
     this.cache = {};
+    this.headers = headers;
     this.getResource = function() {
         var resource = '';
         var callback = undefined;
@@ -47,6 +48,12 @@ function APIConnection() {
         var req = new XMLHttpRequest();
         req.open('get', resource + params, true);
         req.setRequestHeader('Accept', 'application/json');
+        if(self.headers){
+            for(k in self.headers){
+                req.setRequestHeader(k, self.headers[k]);
+            }
+        }
+        
         req.onload = function(res){
             if(res.target.status !== 200) {
                 throw "Invalid status code from API: " + res.statusCode;
@@ -55,11 +62,11 @@ function APIConnection() {
             var expires = parse_cache_control(res.target.getResponseHeader('Cache-Control'));
             
             var data = new APIObject(JSON.parse(res.target.response), self);
-            if(expires !== 0){
+            if(expires !== 0) {
                 self.cache[resource + params] = {"data": data, "expires": expires};
             }
             
-            if(typeof callback !== 'undefined') {
+            if(typeof callback === 'function') {
                 callback(data);
             }
         };
