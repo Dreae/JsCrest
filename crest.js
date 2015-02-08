@@ -64,7 +64,7 @@ function CRESTClient(token) {
         }
         scopes = (scopes.length > 0) ? '&' + scopes.join(',') : '';
         
-        var url = 'https://login.eveonline.com/?response_type=token&redirect_uri=' + redirect + '&client_id=' + client_id + scopes + "&state=" + state;
+        var url = 'https://login.eveonline.com/oauth/authorize?response_type=token&redirect_uri=' + redirect + '&client_id=' + client_id + scopes + "&state=" + state;
         window.location = url;
     };
     

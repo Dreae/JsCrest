@@ -1,0 +1,37 @@
+{
+    "name": "jscrest",
+    "version": "1.0.0-beta",
+    "homepage": "https://github.com/Dreae/JsCrest",
+    "author": {
+        "name": "Dreae",
+        "url": "https://dreae.me"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Dreae/jscrest.git"
+    },
+    "description": "JavaScript library for the CREST API",
+    "main": "dist/crest.js",
+    "moduleType": [
+        "globals"
+    ],
+    "keywords": [
+        "eve",
+        "online",
+        "crest"
+    ],
+    "license": {
+        "type": "MIT",
+        "url": "https://github.com/Dreae/JsCrest/blob/master/LICENSE"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "browserify": "8.1.3",
+        "uglify-js": "2.4.16",
+        "cookie": "0.1.2" 
+    },
+    "scripts": {
+        "build-min": "mkdir -p dist; browserify crest.js | uglifyjs -mc -r=x,APIObject,CRESTClient > dist/crest.min.js",
+        "build": "mkdir -p dist; browserify crest.js > dist/crest.js"
+    }
+}
